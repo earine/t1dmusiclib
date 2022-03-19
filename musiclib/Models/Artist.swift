@@ -6,3 +6,9 @@
 //
 
 import Foundation
+struct Artist {
+    let id: String
+    let name: String
+    let picture: String
+    let albums: [Album]?
+}
