@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct musiclibApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ArtistsListView(store: Store(
+                                        initialState: ChartsState(),
+                                        reducer: chartsReducer,
+                                        environment: .live(environment: ChartsEnvironment(chartsRequest: NetworkClient.shared.chartArtistsEffect))))
         }
     }
 }

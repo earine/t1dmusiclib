@@ -6,9 +6,17 @@
 //
 
 import Foundation
-struct Album {
-    let id: String
-    let name: String
-    let cover: String
-    let tracklist: [Track]
+struct Album: Codable {
+    let id: Int
+    let title: String
+    let coverMedium: String?
+//    let tracklist: [Track]
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, coverMedium
+    }
+}
+
+struct AlbumResponse: Codable {
+    var data: [Album]
 }

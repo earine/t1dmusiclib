@@ -6,44 +6,71 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ArtistView: View {
+    let store: Store<ArtistState, ArtistAction>
 
-    var artist: String
-
-    let data = (1...100).map { "Item \($0)" }
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
 
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns) {
-                ForEach(data, id: \.self) { item in
-                    albumCell()
+        WithViewStore(self.store) { viewStore in
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(viewStore.state.artist.albums ?? [], id: \.id) { album in
+                        albumCell(album)
+                    }
                 }
             }
+            .navigationTitle(viewStore.state.artist.name)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
-        .navigationTitle(artist)
     }
 }
 
 extension ArtistView {
-    private func albumCell() -> some View {
-        VStack {
-            Image(systemName: "camera.metering.unknown")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding()
+    private func albumCell(_ album: Album) -> some View {
+        VStack(alignment: .leading) {
+            if let coverMedium = album.coverMedium {
+                AsyncImage(url: URL(string: coverMedium)) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .clipped()
+                } placeholder: {
+                    Image(systemName: "camera.metering.unknown")
+                }
+            } else {
+                Image(systemName: "camera.metering.unknown")
+            }
 
-            Text("Fetch the Bold Cutters")
+            Spacer()
+
+            Text(album.title)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+                .font(.body)
         }
+        .padding()
     }
 }
 
 struct ArtistView_Previews: PreviewProvider {
     static var previews: some View {
-        ArtistView(artist: "Prince")
+        ArtistView(store: Store(initialState: ArtistState(artist: Artist(id: 0,
+                                                                         name: "Sade",
+                                                                         pictureMedium: "",
+                                                                         albums: [
+                                                                            Album(id: 1, title: "Lovers Rock", coverMedium: "") ])),
+                                reducer: artistReducer,
+                                environment: .live(
+                                    environment: ArtistEnvironment(
+                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect)
+                                )))
     }
 }

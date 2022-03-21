@@ -6,52 +6,72 @@
 //
 
 import SwiftUI
-
+import ComposableArchitecture
 struct ArtistsListView: View {
-    // TODO: replace dummy data with the backend
-    let artists = ["Prince", "Lady Gaga", "Sade", "Taylor Swift", "Weeknd"]
+    let store: Store<ChartsState, ChartsAction>
 
     @State private var searchQueryString = ""
 
     private enum Constants {
         static let cellHeight: CGFloat = 40
-        static let artistImageWidth: CGFloat = 50
+        static let artistImageWidth: CGFloat = 60
     }
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(artists, id: \.self) { artist in
-                    NavigationLink(destination: ArtistView(artist: artist)) {
-                        artistCell(artist)
+        WithViewStore(self.store) { viewStore in
+            NavigationView {
+                List {
+                    if let artists = viewStore.state.artists {
+                        ForEach(artists, id: \.id) { artist in
+                            NavigationLink(destination: ArtistView(store: Store(
+                                initialState: ArtistState(artist: artist),
+                                reducer: artistReducer,
+                                environment: .live(
+                                    environment: ArtistEnvironment(
+                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect)
+                                )
+                            ))) {
+                                artistCell(artist)
+                            }
+                        }
                     }
                 }
+                .navigationTitle("Artists")
+                .listStyle(.plain)
+
+                .onAppear() {
+                    viewStore.send(.onAppear)
+                }
             }
-            .navigationTitle("Artists")
-            .listStyle(.plain)
-        }
-        .searchable(text: $searchQueryString)
-        .onChange(of: searchQueryString) { searchText in
+            .searchable(text: $searchQueryString)
+            .onChange(of: searchQueryString) { searchText in
+            }
         }
     }
 }
 
 extension ArtistsListView {
-    private func artistCell(_ artist: String) -> some View {
+    private func artistCell(_ artist: Artist) -> some View {
         HStack {
-            Image(systemName: "camera.metering.unknown")
-                .resizable()
-                .frame(width: Constants.artistImageWidth)
-                .aspectRatio(contentMode: .fit)
+            AsyncImage(url: URL(string: artist.pictureMedium)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: Constants.artistImageWidth, height: Constants.cellHeight)
+                    .clipped()
+            } placeholder: {
+                Image(systemName: "camera.metering.unknown")
+            }
+            .frame(width: Constants.artistImageWidth, height: Constants.cellHeight)
 
-            Text(artist)
+            Text(artist.name)
         }
         .frame(height: Constants.cellHeight)
     }
 }
 
-struct ArtistsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistsListView()
-    }
-}
+//struct ArtistsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ArtistsListView()
+//    }
+//}
