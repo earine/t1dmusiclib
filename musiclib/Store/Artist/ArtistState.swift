@@ -8,4 +8,5 @@
 import Foundation
 struct ArtistState: Equatable {
     var artist: Artist
+    var isLoading: Bool = false
 }

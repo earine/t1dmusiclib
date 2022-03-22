@@ -11,17 +11,34 @@ import ComposableArchitecture
 struct ArtistView: View {
     let store: Store<ArtistState, ArtistAction>
 
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+    private let columns = [
+        GridItem(.flexible(), alignment: .top),
+        GridItem(.flexible(), alignment: .top)
     ]
+
+    private enum Constants {
+        static let albumCoverMultiplier: CGFloat = 0.45
+        static let lineLimit: Int = 2
+        static let spacing: CGFloat = 5
+    }
+
+    private var albumCoverFrame: CGFloat {
+        return UIScreen.main.bounds.width * Constants.albumCoverMultiplier
+    }
 
     var body: some View {
         WithViewStore(self.store) { viewStore in
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(viewStore.state.artist.albums ?? [], id: \.id) { album in
-                        albumCell(album)
+            VStack {
+                if viewStore.state.isLoading {
+                    ProgressView()
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: columns) {
+                            ForEach(viewStore.state.artist.albums ?? [], id: \.id) { album in
+                                albumCell(artistName: viewStore.state.artist.name,
+                                          album)
+                            }
+                        }
                     }
                 }
             }
@@ -34,29 +51,38 @@ struct ArtistView: View {
 }
 
 extension ArtistView {
-    private func albumCell(_ album: Album) -> some View {
-        VStack(alignment: .leading) {
-            if let coverMedium = album.coverMedium {
-                AsyncImage(url: URL(string: coverMedium)) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .clipped()
-                } placeholder: {
+    private func albumCell(artistName: String, _ album: Album) -> some View {
+        VStack(alignment: .leading, spacing: Constants.spacing) {
+            Group {
+                if let coverMedium = album.coverMedium {
+                    AsyncImage(url: URL(string: coverMedium)) { image in
+                        image
+                            .coverImageModifier(height: albumCoverFrame,
+                                                width: albumCoverFrame)
+                    } placeholder: {
+                        Image(systemName: "camera.metering.unknown")
+                            .coverImageModifier()
+                    }
+                } else {
                     Image(systemName: "camera.metering.unknown")
+                        .coverImageModifier()
                 }
-            } else {
-                Image(systemName: "camera.metering.unknown")
             }
+            .frame(width: albumCoverFrame,
+                   height: albumCoverFrame)
 
-            Spacer()
+            Group {
+                Text(album.title)
+                    .bold()
 
-            Text(album.title)
-                .lineLimit(2)
-                .multilineTextAlignment(.leading)
-                .font(.body)
+                Text(artistName)
+                    .foregroundColor(.secondary)
+            }
+            .lineLimit(Constants.lineLimit)
+            .multilineTextAlignment(.leading)
+            .font(.body)
         }
-        .padding()
+        .padding([.leading, .trailing])
     }
 }
 

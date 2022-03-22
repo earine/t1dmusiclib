@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+
 struct ArtistsListView: View {
     let store: Store<ChartsState, ChartsAction>
 
@@ -55,10 +56,8 @@ extension ArtistsListView {
         HStack {
             AsyncImage(url: URL(string: artist.pictureMedium)) { image in
                 image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: Constants.artistImageWidth, height: Constants.cellHeight)
-                    .clipped()
+                    .coverImageModifier(height: Constants.cellHeight,
+                                        width: Constants.artistImageWidth)
             } placeholder: {
                 Image(systemName: "camera.metering.unknown")
             }

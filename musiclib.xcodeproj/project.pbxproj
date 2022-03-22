@@ -32,6 +32,7 @@
 		AE0F3B4227E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
 		AE0F3B4327E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
 		AE0F3B4427E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
+		AEAC360127E9E9640066F2F9 /* Image+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */; };
 		AEFE167527E8E20F0000F2E3 /* ArtistAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */; };
 		AEFE167727E8E2200000F2E3 /* ArtistReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */; };
 		AEFE167927E8E22E0000F2E3 /* ArtistEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */; };
@@ -76,6 +77,7 @@
 		AE0F3B3827E5FBB5005E8DAC /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		AE0F3B3C27E5FBEF005E8DAC /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Helpers.swift"; sourceTree = "<group>"; };
 		AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAction.swift; sourceTree = "<group>"; };
 		AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistReducer.swift; sourceTree = "<group>"; };
 		AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistEnvironment.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				AE0F3B3327E5F8FC005E8DAC /* Models */,
 				AE0F3AD327E5E666005E8DAC /* musiclibApp.swift */,
 				AE0F3B2427E5EAE9005E8DAC /* Views */,
+				AEAC35FF27E9E92A0066F2F9 /* Shared */,
 				AE0F3AD727E5E667005E8DAC /* Assets.xcassets */,
 				AE0F3AD927E5E667005E8DAC /* Preview Content */,
 			);
@@ -214,6 +217,14 @@
 				AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		AEAC35FF27E9E92A0066F2F9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		AEFE167327E8E1D70000F2E3 /* Artist */ = {
@@ -399,6 +410,7 @@
 				AEFE168027E91ED00000F2E3 /* ChartsAction.swift in Sources */,
 				AEFE167E27E8FF770000F2E3 /* ChartsState.swift in Sources */,
 				AE0F3B3D27E5FBEF005E8DAC /* Track.swift in Sources */,
+				AEAC360127E9E9640066F2F9 /* Image+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
