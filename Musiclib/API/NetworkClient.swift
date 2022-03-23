@@ -46,13 +46,6 @@ public class NetworkClient {
             .decode(type: Chart.self, decoder: decoder)
             .mapError { _ in APIError.decodingError }
             .eraseToEffect()
-//            .sink { [weak self] in
-//                            self?.currentPage += 1
-//                            self?.members.append(contentsOf: $0)
-//                            // If count of data received is less than perPage value then it is last page.
-//                            if $0.count < perPage {
-//                                self?.membersListFull = true
-//                            }
         return result
     }
 
