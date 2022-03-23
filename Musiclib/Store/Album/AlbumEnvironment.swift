@@ -9,4 +9,5 @@ import ComposableArchitecture
 
 struct AlbumEnvironment {
     var albumRequest: (_ albumId: Int) -> Effect<Album, APIError>
+    var trackRequest: (_ trackId: Int) -> Effect<Track, APIError>
 }

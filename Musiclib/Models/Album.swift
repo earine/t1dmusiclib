@@ -19,6 +19,14 @@ struct Album: Codable, Equatable {
     static func == (lhs: Album, rhs: Album) -> Bool {
         return lhs.id == rhs.id
     }
+
+    mutating func updateTrackInfo(trackInfo: Track) {
+        if let _ = tracks?.data,
+           let trackIndex = tracks?.data.firstIndex(where: { $0.id == trackInfo.id }) {
+            tracks?.data.removeAll(where: { $0.id == trackInfo.id })
+            tracks?.data.insert(trackInfo, at: trackIndex)
+        }
+    }
 }
 
 struct AlbumResponse: Codable {

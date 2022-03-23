@@ -41,7 +41,8 @@ struct ArtistView: View {
                                     reducer: albumReducer,
                                     environment: .live(
                                         environment: AlbumEnvironment(
-                                            albumRequest: NetworkClient.shared.albumEffect
+                                            albumRequest: NetworkClient.shared.albumEffect,
+                                            trackRequest: NetworkClient.shared.trackInfoEffect
                                         )
                                     )
                                 ))) {

@@ -23,6 +23,7 @@ public class NetworkClient {
         case album = "/album/*"
         case chart = "/chart/0/artists"
         case searchArtist = "/search/artist"
+        case track = "/track/*"
     }
 
     private var decoder: JSONDecoder {
@@ -95,6 +96,21 @@ public class NetworkClient {
             .mapError { _ in APIError.downloadError }
             .map { data, _ in data }
             .decode(type: Album.self, decoder: decoder)
+            .mapError { _ in APIError.decodingError }
+            .eraseToEffect()
+    }
+
+    // MARK: - Track Requests
+    func trackInfoEffect(id: Int) -> Effect<Track, APIError> {
+        guard let url = URL(string: urlStringBuilder(.track)
+            .replacingOccurrences(of: "*", with: String(id))) else {
+            fatalError("Error on creating url")
+        }
+
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .mapError { _ in APIError.downloadError }
+            .map { data, _ in data }
+            .decode(type: Track.self, decoder: decoder)
             .mapError { _ in APIError.decodingError }
             .eraseToEffect()
     }

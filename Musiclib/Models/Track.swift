@@ -13,5 +13,5 @@ struct Track: Codable {
 }
 
 struct TracksResponse: Codable {
-    let data: [Track]
+    var data: [Track]
 }
