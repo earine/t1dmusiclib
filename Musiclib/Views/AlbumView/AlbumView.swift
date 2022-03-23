@@ -59,7 +59,7 @@ struct AlbumView: View {
                 Text(track.title)
 
                 if let contributors = track.contributors {
-                    Text(contributors.map({ $0.name }).joined(separator: ","))
+                    Text(contributors.map({ $0.name }).joined(separator: ", "))
                         .foregroundColor(.secondary)
                         .font(.callout)
                 }

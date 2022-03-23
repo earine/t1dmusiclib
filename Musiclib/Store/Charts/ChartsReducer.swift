@@ -31,12 +31,14 @@ let chartsReducer = Reducer<
 
     case .searchArtistByText(let searchQuery):
         state.isSearching = searchQuery != ""
+        state.currentPage = searchQuery == state.searchQuery ? state.currentPage : .zero
+        state.searchQuery = searchQuery
 
         guard state.isSearching else {
             return .none
         }
         
-        return environment.searchArtistRequest(searchQuery)
+        return environment.searchArtistRequest(searchQuery, state.currentPage)
             .receive(on: environment.mainQueue())
             .catchToEffect()
             .map(ChartsAction.searchResultDataLoaded)
@@ -44,7 +46,13 @@ let chartsReducer = Reducer<
     case .searchResultDataLoaded(let result):
         switch result {
         case .success(let artists):
-            state.searchedArtistsResult = artists
+            if state.currentPage == .zero {
+                state.searchedArtistsResult = artists
+            } else {
+                state.searchedArtistsResult?.append(contentsOf: artists)
+            }
+            
+            state.currentPage += state.perPage
         case .failure:
             break
         }

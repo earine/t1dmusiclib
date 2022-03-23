@@ -46,6 +46,13 @@ public class NetworkClient {
             .decode(type: Chart.self, decoder: decoder)
             .mapError { _ in APIError.decodingError }
             .eraseToEffect()
+//            .sink { [weak self] in
+//                            self?.currentPage += 1
+//                            self?.members.append(contentsOf: $0)
+//                            // If count of data received is less than perPage value then it is last page.
+//                            if $0.count < perPage {
+//                                self?.membersListFull = true
+//                            }
         return result
     }
 
@@ -65,8 +72,9 @@ public class NetworkClient {
             .eraseToEffect()
     }
 
-    func searchArtistEffect(searchQuery: String) -> Effect<[Artist], APIError> {
-        let queryItems = [URLQueryItem(name: "q", value: "\(searchQuery)")]
+    func searchArtistEffect(searchQuery: String, currentIndex: Int) -> Effect<[Artist], APIError> {
+        let queryItems = [URLQueryItem(name: "q", value: searchQuery),
+                          URLQueryItem(name: "index", value: String(currentIndex))]
         var urlComps = URLComponents(string: urlStringBuilder(.searchArtist))
         urlComps?.queryItems = queryItems
 

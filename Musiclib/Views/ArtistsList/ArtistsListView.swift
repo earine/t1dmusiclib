@@ -21,35 +21,47 @@ struct ArtistsListView: View {
     var body: some View {
         WithViewStore(self.store) { viewStore in
             NavigationView {
-                List {
-                    if let artists = viewStore.state.isSearching
-                                        ? viewStore.state.searchedArtistsResult
-                                        : viewStore.state.artists {
-                        ForEach(artists, id: \.id) { artist in
-                            NavigationLink(destination: ArtistView(store: Store(
-                                initialState: ArtistState(artist: artist),
-                                reducer: artistReducer,
-                                environment: .live(
-                                    environment: ArtistEnvironment(
-                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect
+                ScrollViewReader { proxy in
+                    List {
+                        if let artists = viewStore.state.isSearching
+                            ? viewStore.state.searchedArtistsResult
+                            : viewStore.state.artists {
+                            ForEach(artists, id: \.id) { artist in
+                                NavigationLink(destination: ArtistView(store: Store(
+                                    initialState: ArtistState(artist: artist),
+                                    reducer: artistReducer,
+                                    environment: .live(
+                                        environment: ArtistEnvironment(
+                                            artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect
+                                        )
                                     )
-                                )
-                            ))) {
-                                artistCell(artist)
+                                ))) {
+                                    artistCell(artist)
+                                }
                             }
                         }
+
+                        if viewStore.state.isSearching
+                            && viewStore.state.searchedArtisResultIsFull == false {
+                            ProgressView()
+                                .onAppear {
+                                    viewStore.send(.searchArtistByText(searchQueryString))
+                                }
+                        }
+                    }
+                    .navigationTitle("Artists")
+                    .listStyle(.plain)
+                    .onAppear() {
+                        viewStore.send(.onAppear)
+                    }
+                    .onChange(of: searchQueryString) { searchText in
+                        proxy.scrollTo(0)
+                        viewStore.send(.searchArtistByText(searchText))
                     }
                 }
-                .navigationTitle("Artists")
-                .listStyle(.plain)
-                .onAppear() {
-                    viewStore.send(.onAppear)
-                }
+
             }
             .searchable(text: $searchQueryString)
-            .onChange(of: searchQueryString) { searchText in
-                viewStore.send(.searchArtistByText(searchText))
-            }
         }
     }
 }
@@ -59,7 +71,7 @@ extension ArtistsListView {
         HStack {
             AsyncImage(url: URL(string: artist.pictureMedium)) { image in
                 image.coverImageModifier(height: Constants.cellHeight,
-                                        width: Constants.artistImageWidth)
+                                         width: Constants.artistImageWidth)
             } placeholder: {
                 Image(systemName: "camera.metering.unknown")
             }
@@ -71,8 +83,22 @@ extension ArtistsListView {
     }
 }
 
-//struct ArtistsListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ArtistsListView()
-//    }
-//}
+struct ArtistsListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ArtistsListView(store: Store(
+            initialState: ChartsState(isSearching: false,
+                                      artists: [
+                                        Artist(id: 1, name: "Sade", pictureMedium: ""),
+                                        Artist(id: 2, name: "Fiona Apple", pictureMedium: ""),
+                                        Artist(id: 3, name: "Beach House", pictureMedium: "")
+                                      ],
+                                      searchedArtistsResult: nil),
+            reducer: chartsReducer,
+            environment: .live(
+                environment: ChartsEnvironment(
+                    chartsRequest: NetworkClient.shared.chartArtistsEffect,
+                    searchArtistRequest: NetworkClient.shared.searchArtistEffect
+                )
+            )
+        ))    }
+}

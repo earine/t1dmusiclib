@@ -9,5 +9,5 @@ import ComposableArchitecture
 
 struct ChartsEnvironment {
     var chartsRequest: () -> Effect<Chart, APIError>
-    var searchArtistRequest: (String) -> Effect<[Artist], APIError>
+    var searchArtistRequest: (String, Int) -> Effect<[Artist], APIError>
 }
