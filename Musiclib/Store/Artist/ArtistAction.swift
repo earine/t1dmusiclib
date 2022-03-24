@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ArtistAction {
+enum ArtistAction: Equatable {
     case onAppear
     case albumsDataLoaded(Result<[Album], APIError>)
 }

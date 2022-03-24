@@ -16,6 +16,9 @@ let albumReducer = Reducer<
     case .onAppear:
         state.isLoading = true
 
+        return Effect(value: .fetchAlbumData)
+
+    case .fetchAlbumData:
         return environment.albumRequest(state.album.id)
             .receive(on: DispatchQueue.main)
             .catchToEffect()
@@ -44,15 +47,20 @@ let albumReducer = Reducer<
     case .trackDataLoaded(let result):
         switch result {
         case .success(let trackInfo):
-            state.album.updateTrackInfo(trackInfo: trackInfo)
-
-            if state.album.tracks?.data.last?.id ?? 0 == trackInfo.id {
-                state.isLoading = false
-            }
+            return Effect(value: .updateTrack(trackInfo))
         case .failure:
             state.isLoading = false
             break
         }
+        return .none
+
+    case .updateTrack(let trackInfo):
+        state.album.updateTrackInfo(trackInfo: trackInfo)
+
+        if state.album.tracks?.data.last?.id ?? 0 == trackInfo.id {
+            state.isLoading = false
+        }
+
         return .none
     }
 }
