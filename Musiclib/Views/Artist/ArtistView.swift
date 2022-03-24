@@ -84,11 +84,10 @@ extension ArtistView {
 
             Group {
                 Text(album.title)
-                    .bold()
-                    .foregroundColor(.primary)
+                    .titleModifier()
 
                 Text(artistName)
-                    .foregroundColor(.secondary)
+                    .artistTextModifier()
                     .padding(.top, .zero)
             }
             .lineLimit(Constants.lineLimit)
