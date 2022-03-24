@@ -15,23 +15,57 @@
 		AE0F3AEF27E5E668005E8DAC /* musiclibUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3AEE27E5E668005E8DAC /* musiclibUITests.swift */; };
 		AE0F3AF127E5E668005E8DAC /* musiclibUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3AF027E5E668005E8DAC /* musiclibUITestsLaunchTests.swift */; };
 		AE0F3B2727E5EB30005E8DAC /* ChartArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2627E5EB30005E8DAC /* ChartArtistListView.swift */; };
-		AE0F3B2827E5EB30005E8DAC /* ChartArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2627E5EB30005E8DAC /* ChartArtistListView.swift */; };
-		AE0F3B2927E5EB30005E8DAC /* ChartArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2627E5EB30005E8DAC /* ChartArtistListView.swift */; };
 		AE0F3B3027E5EF7F005E8DAC /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2F27E5EF7F005E8DAC /* ArtistView.swift */; };
-		AE0F3B3127E5EF7F005E8DAC /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2F27E5EF7F005E8DAC /* ArtistView.swift */; };
-		AE0F3B3227E5EF7F005E8DAC /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2F27E5EF7F005E8DAC /* ArtistView.swift */; };
 		AE0F3B3527E5F908005E8DAC /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3427E5F908005E8DAC /* Artist.swift */; };
-		AE0F3B3627E5F909005E8DAC /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3427E5F908005E8DAC /* Artist.swift */; };
-		AE0F3B3727E5F909005E8DAC /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3427E5F908005E8DAC /* Artist.swift */; };
 		AE0F3B3927E5FBB5005E8DAC /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3827E5FBB5005E8DAC /* Album.swift */; };
-		AE0F3B3A27E5FBB5005E8DAC /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3827E5FBB5005E8DAC /* Album.swift */; };
-		AE0F3B3B27E5FBB5005E8DAC /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3827E5FBB5005E8DAC /* Album.swift */; };
 		AE0F3B3D27E5FBEF005E8DAC /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3C27E5FBEF005E8DAC /* Track.swift */; };
-		AE0F3B3E27E5FBEF005E8DAC /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3C27E5FBEF005E8DAC /* Track.swift */; };
-		AE0F3B3F27E5FBEF005E8DAC /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3C27E5FBEF005E8DAC /* Track.swift */; };
 		AE0F3B4227E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
-		AE0F3B4327E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
-		AE0F3B4427E5FE13005E8DAC /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
+		AE7FB62E27EC92E000317705 /* ArtistReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */; };
+		AE7FB62F27EC92E000317705 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3427E5F908005E8DAC /* Artist.swift */; };
+		AE7FB63027EC92E000317705 /* ArtistEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */; };
+		AE7FB63127EC92E000317705 /* ChartsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167D27E8FF770000F2E3 /* ChartsState.swift */; };
+		AE7FB63227EC92E000317705 /* ArtistState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168127E91EFE0000F2E3 /* ArtistState.swift */; };
+		AE7FB63327EC92E000317705 /* MusiclibApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3AD327E5E666005E8DAC /* MusiclibApp.swift */; };
+		AE7FB63427EC92E000317705 /* ChartsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168527E91F730000F2E3 /* ChartsEnvironment.swift */; };
+		AE7FB63527EC92E000317705 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3827E5FBB5005E8DAC /* Album.swift */; };
+		AE7FB63627EC92E000317705 /* Image+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */; };
+		AE7FB63727EC92E000317705 /* ChartsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168327E91F420000F2E3 /* ChartsReducer.swift */; };
+		AE7FB63827EC92E000317705 /* ArtistAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */; };
+		AE7FB63927EC92E000317705 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
+		AE7FB63A27EC92E000317705 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2F27E5EF7F005E8DAC /* ArtistView.swift */; };
+		AE7FB63B27EC92E000317705 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167A27E8FE630000F2E3 /* Chart.swift */; };
+		AE7FB63C27EC92E000317705 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360327E9FE110066F2F9 /* AlbumView.swift */; };
+		AE7FB63D27EC92E000317705 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3C27E5FBEF005E8DAC /* Track.swift */; };
+		AE7FB63E27EC92E000317705 /* AlbumReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360827EA006E0066F2F9 /* AlbumReducer.swift */; };
+		AE7FB63F27EC92E000317705 /* AlbumAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360627EA00270066F2F9 /* AlbumAction.swift */; };
+		AE7FB64027EC92E000317705 /* ChartsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167F27E91ED00000F2E3 /* ChartsAction.swift */; };
+		AE7FB64127EC92E000317705 /* Int+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360E27EA11EF0066F2F9 /* Int+Helpers.swift */; };
+		AE7FB64227EC92E000317705 /* AlbumEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360A27EA00770066F2F9 /* AlbumEnvironment.swift */; };
+		AE7FB64327EC92E000317705 /* ChartArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2627E5EB30005E8DAC /* ChartArtistListView.swift */; };
+		AE7FB64427EC92E000317705 /* AlbumState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360C27EA0D5C0066F2F9 /* AlbumState.swift */; };
+		AE7FB65627EC92E200317705 /* ArtistReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */; };
+		AE7FB65727EC92E200317705 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3427E5F908005E8DAC /* Artist.swift */; };
+		AE7FB65827EC92E200317705 /* ArtistEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */; };
+		AE7FB65927EC92E200317705 /* ChartsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167D27E8FF770000F2E3 /* ChartsState.swift */; };
+		AE7FB65A27EC92E200317705 /* ArtistState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168127E91EFE0000F2E3 /* ArtistState.swift */; };
+		AE7FB65B27EC92E200317705 /* MusiclibApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3AD327E5E666005E8DAC /* MusiclibApp.swift */; };
+		AE7FB65C27EC92E200317705 /* ChartsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168527E91F730000F2E3 /* ChartsEnvironment.swift */; };
+		AE7FB65D27EC92E200317705 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3827E5FBB5005E8DAC /* Album.swift */; };
+		AE7FB65E27EC92E200317705 /* Image+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */; };
+		AE7FB65F27EC92E200317705 /* ChartsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE168327E91F420000F2E3 /* ChartsReducer.swift */; };
+		AE7FB66027EC92E200317705 /* ArtistAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */; };
+		AE7FB66127EC92E200317705 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B4127E5FE13005E8DAC /* NetworkClient.swift */; };
+		AE7FB66227EC92E200317705 /* ArtistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2F27E5EF7F005E8DAC /* ArtistView.swift */; };
+		AE7FB66327EC92E200317705 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167A27E8FE630000F2E3 /* Chart.swift */; };
+		AE7FB66427EC92E200317705 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360327E9FE110066F2F9 /* AlbumView.swift */; };
+		AE7FB66527EC92E200317705 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B3C27E5FBEF005E8DAC /* Track.swift */; };
+		AE7FB66627EC92E200317705 /* AlbumReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360827EA006E0066F2F9 /* AlbumReducer.swift */; };
+		AE7FB66727EC92E200317705 /* AlbumAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360627EA00270066F2F9 /* AlbumAction.swift */; };
+		AE7FB66827EC92E200317705 /* ChartsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167F27E91ED00000F2E3 /* ChartsAction.swift */; };
+		AE7FB66927EC92E200317705 /* Int+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360E27EA11EF0066F2F9 /* Int+Helpers.swift */; };
+		AE7FB66A27EC92E200317705 /* AlbumEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360A27EA00770066F2F9 /* AlbumEnvironment.swift */; };
+		AE7FB66B27EC92E200317705 /* ChartArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0F3B2627E5EB30005E8DAC /* ChartArtistListView.swift */; };
+		AE7FB66C27EC92E200317705 /* AlbumState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360C27EA0D5C0066F2F9 /* AlbumState.swift */; };
 		AEAC360127E9E9640066F2F9 /* Image+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360027E9E9640066F2F9 /* Image+Helpers.swift */; };
 		AEAC360427E9FE110066F2F9 /* AlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360327E9FE110066F2F9 /* AlbumView.swift */; };
 		AEAC360727EA00270066F2F9 /* AlbumAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360627EA00270066F2F9 /* AlbumAction.swift */; };
@@ -458,13 +492,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7FB64027EC92E000317705 /* ChartsAction.swift in Sources */,
+				AE7FB62F27EC92E000317705 /* Artist.swift in Sources */,
+				AE7FB63627EC92E000317705 /* Image+Helpers.swift in Sources */,
 				AE0F3AE527E5E668005E8DAC /* musiclibTests.swift in Sources */,
-				AE0F3B2827E5EB30005E8DAC /* ChartArtistListView.swift in Sources */,
-				AE0F3B3627E5F909005E8DAC /* Artist.swift in Sources */,
-				AE0F3B3127E5EF7F005E8DAC /* ArtistView.swift in Sources */,
-				AE0F3B3A27E5FBB5005E8DAC /* Album.swift in Sources */,
-				AE0F3B3E27E5FBEF005E8DAC /* Track.swift in Sources */,
-				AE0F3B4327E5FE13005E8DAC /* NetworkClient.swift in Sources */,
+				AE7FB63027EC92E000317705 /* ArtistEnvironment.swift in Sources */,
+				AE7FB62E27EC92E000317705 /* ArtistReducer.swift in Sources */,
+				AE7FB63B27EC92E000317705 /* Chart.swift in Sources */,
+				AE7FB63E27EC92E000317705 /* AlbumReducer.swift in Sources */,
+				AE7FB63F27EC92E000317705 /* AlbumAction.swift in Sources */,
+				AE7FB63C27EC92E000317705 /* AlbumView.swift in Sources */,
+				AE7FB63427EC92E000317705 /* ChartsEnvironment.swift in Sources */,
+				AE7FB64127EC92E000317705 /* Int+Helpers.swift in Sources */,
+				AE7FB63727EC92E000317705 /* ChartsReducer.swift in Sources */,
+				AE7FB64427EC92E000317705 /* AlbumState.swift in Sources */,
+				AE7FB64227EC92E000317705 /* AlbumEnvironment.swift in Sources */,
+				AE7FB63527EC92E000317705 /* Album.swift in Sources */,
+				AE7FB63927EC92E000317705 /* NetworkClient.swift in Sources */,
+				AE7FB63A27EC92E000317705 /* ArtistView.swift in Sources */,
+				AE7FB63D27EC92E000317705 /* Track.swift in Sources */,
+				AE7FB63227EC92E000317705 /* ArtistState.swift in Sources */,
+				AE7FB63127EC92E000317705 /* ChartsState.swift in Sources */,
+				AE7FB63827EC92E000317705 /* ArtistAction.swift in Sources */,
+				AE7FB64327EC92E000317705 /* ChartArtistListView.swift in Sources */,
+				AE7FB63327EC92E000317705 /* MusiclibApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,14 +523,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE0F3B2927E5EB30005E8DAC /* ChartArtistListView.swift in Sources */,
-				AE0F3B3227E5EF7F005E8DAC /* ArtistView.swift in Sources */,
+				AE7FB65927EC92E200317705 /* ChartsState.swift in Sources */,
+				AE7FB66C27EC92E200317705 /* AlbumState.swift in Sources */,
+				AE7FB66427EC92E200317705 /* AlbumView.swift in Sources */,
+				AE7FB65F27EC92E200317705 /* ChartsReducer.swift in Sources */,
+				AE7FB66827EC92E200317705 /* ChartsAction.swift in Sources */,
+				AE7FB66727EC92E200317705 /* AlbumAction.swift in Sources */,
+				AE7FB66227EC92E200317705 /* ArtistView.swift in Sources */,
+				AE7FB65827EC92E200317705 /* ArtistEnvironment.swift in Sources */,
+				AE7FB66527EC92E200317705 /* Track.swift in Sources */,
+				AE7FB65C27EC92E200317705 /* ChartsEnvironment.swift in Sources */,
+				AE7FB66627EC92E200317705 /* AlbumReducer.swift in Sources */,
+				AE7FB65627EC92E200317705 /* ArtistReducer.swift in Sources */,
+				AE7FB66A27EC92E200317705 /* AlbumEnvironment.swift in Sources */,
 				AE0F3AF127E5E668005E8DAC /* musiclibUITestsLaunchTests.swift in Sources */,
-				AE0F3B3B27E5FBB5005E8DAC /* Album.swift in Sources */,
-				AE0F3B3727E5F909005E8DAC /* Artist.swift in Sources */,
+				AE7FB65A27EC92E200317705 /* ArtistState.swift in Sources */,
+				AE7FB66327EC92E200317705 /* Chart.swift in Sources */,
+				AE7FB65B27EC92E200317705 /* MusiclibApp.swift in Sources */,
+				AE7FB66027EC92E200317705 /* ArtistAction.swift in Sources */,
+				AE7FB65E27EC92E200317705 /* Image+Helpers.swift in Sources */,
+				AE7FB65727EC92E200317705 /* Artist.swift in Sources */,
+				AE7FB66127EC92E200317705 /* NetworkClient.swift in Sources */,
+				AE7FB66B27EC92E200317705 /* ChartArtistListView.swift in Sources */,
+				AE7FB66927EC92E200317705 /* Int+Helpers.swift in Sources */,
 				AE0F3AEF27E5E668005E8DAC /* musiclibUITests.swift in Sources */,
-				AE0F3B4427E5FE13005E8DAC /* NetworkClient.swift in Sources */,
-				AE0F3B3F27E5FBEF005E8DAC /* Track.swift in Sources */,
+				AE7FB65D27EC92E200317705 /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

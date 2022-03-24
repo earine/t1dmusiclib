@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import musiclib
+@testable import Musiclib
 
 class musiclibTests: XCTestCase {
 
