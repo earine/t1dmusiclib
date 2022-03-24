@@ -18,7 +18,7 @@ struct ChartsState: Equatable {
         return currentPage == maximumPage
     }
 
-    // MARK: pagination support
+    // MARK: Pagination support
     var currentPage = 0
     let perPage = 25
     let maximumPage = 300

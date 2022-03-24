@@ -1,5 +1,5 @@
 //
-//  ArtistsListView.swift
+//  ChartArtistListView.swift
 //  musiclib
 //
 //  Created by mlunts on 19.03.2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct ArtistsListView: View {
+struct ChartArtistListView: View {
     let store: Store<ChartsState, ChartsAction>
 
     @State private var searchQueryString = ""
@@ -16,6 +16,7 @@ struct ArtistsListView: View {
     private enum Constants {
         static let cellHeight: CGFloat = 40
         static let artistImageWidth: CGFloat = 60
+        static let trackCoverPlaceholderImageName: String = "camera.metering.unknown"
     }
 
     var body: some View {
@@ -30,10 +31,8 @@ struct ArtistsListView: View {
                                 NavigationLink(destination: ArtistView(store: Store(
                                     initialState: ArtistState(artist: artist),
                                     reducer: artistReducer,
-                                    environment: .live(
-                                        environment: ArtistEnvironment(
-                                            artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect
-                                        )
+                                    environment: ArtistEnvironment(
+                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect
                                     )
                                 ))) {
                                     artistCell(artist)
@@ -43,10 +42,14 @@ struct ArtistsListView: View {
 
                         if viewStore.state.isSearching
                             && viewStore.state.searchedArtisResultIsFull == false {
-                            ProgressView()
-                                .onAppear {
-                                    viewStore.send(.searchArtistByText(searchQueryString))
-                                }
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                    .onAppear {
+                                        viewStore.send(.searchArtistByText(searchQueryString))
+                                    }
+                                Spacer()
+                            }
                         }
                     }
                     .navigationTitle("Artists")
@@ -66,14 +69,14 @@ struct ArtistsListView: View {
     }
 }
 
-extension ArtistsListView {
+extension ChartArtistListView {
     private func artistCell(_ artist: Artist) -> some View {
         HStack {
             AsyncImage(url: URL(string: artist.pictureMedium)) { image in
                 image.coverImageModifier(height: Constants.cellHeight,
                                          width: Constants.artistImageWidth)
             } placeholder: {
-                Image(systemName: "camera.metering.unknown")
+                Image(systemName: Constants.trackCoverPlaceholderImageName)
             }
             .frame(width: Constants.artistImageWidth, height: Constants.cellHeight)
 
@@ -85,7 +88,7 @@ extension ArtistsListView {
 
 struct ArtistsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ArtistsListView(store: Store(
+        ChartArtistListView(store: Store(
             initialState: ChartsState(isSearching: false,
                                       artists: [
                                         Artist(id: 1, name: "Sade", pictureMedium: ""),
@@ -94,11 +97,11 @@ struct ArtistsListView_Previews: PreviewProvider {
                                       ],
                                       searchedArtistsResult: nil),
             reducer: chartsReducer,
-            environment: .live(
-                environment: ChartsEnvironment(
-                    chartsRequest: NetworkClient.shared.chartArtistsEffect,
-                    searchArtistRequest: NetworkClient.shared.searchArtistEffect
-                )
+            environment: ChartsEnvironment(
+                chartsRequest: NetworkClient.shared.chartArtistsEffect,
+                searchArtistRequest: NetworkClient.shared.searchArtistEffect
             )
-        ))    }
+
+        ))
+    }
 }

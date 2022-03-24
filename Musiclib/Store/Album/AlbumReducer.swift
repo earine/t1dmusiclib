@@ -10,18 +10,14 @@ import ComposableArchitecture
 let albumReducer = Reducer<
     AlbumState,
     AlbumAction,
-    SystemEnvironment<AlbumEnvironment>
+    AlbumEnvironment
 > { state, action, environment in
     switch action {
     case .onAppear:
         state.isLoading = true
 
-        let fal = environment.albumRequest(state.album.id)
-            .receive(on: environment.mainQueue())
-            .catchToEffect()
-            .map(AlbumAction.albumDataLoaded)
         return environment.albumRequest(state.album.id)
-            .receive(on: environment.mainQueue())
+            .receive(on: DispatchQueue.main)
             .catchToEffect()
             .map(AlbumAction.albumDataLoaded)
 
@@ -33,7 +29,7 @@ let albumReducer = Reducer<
             var trackEffects: [Effect<AlbumAction, Never>] = []
             state.album.tracks?.data.forEach({
                 trackEffects.append(environment.trackRequest($0.id)
-                    .receive(on: environment.mainQueue())
+                    .receive(on: DispatchQueue.main)
                     .catchToEffect()
                     .map(AlbumAction.trackDataLoaded))
             })

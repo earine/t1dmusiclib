@@ -5,7 +5,6 @@
 //  Created by mlunts on 19.03.2022.
 //
 
-import Foundation
 struct Album: Codable, Equatable {
     let id: Int
     let title: String

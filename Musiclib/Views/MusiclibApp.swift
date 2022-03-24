@@ -12,14 +12,12 @@ import ComposableArchitecture
 struct MusiclibApp: App {
     var body: some Scene {
         WindowGroup {
-            ArtistsListView(store: Store(
+            ChartArtistListView(store: Store(
                 initialState: ChartsState(),
                 reducer: chartsReducer,
-                environment: .live(
-                    environment: ChartsEnvironment(
+                environment: ChartsEnvironment(
                         chartsRequest: NetworkClient.shared.chartArtistsEffect,
                         searchArtistRequest: NetworkClient.shared.searchArtistEffect
-                    )
                 )
             ))
         }

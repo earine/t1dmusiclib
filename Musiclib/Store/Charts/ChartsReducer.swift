@@ -11,12 +11,12 @@ import ComposableArchitecture
 let chartsReducer = Reducer<
     ChartsState,
     ChartsAction,
-    SystemEnvironment<ChartsEnvironment>
+    ChartsEnvironment
 > { state, action, environment in
     switch action {
     case .onAppear:
         return environment.chartsRequest()
-            .receive(on: environment.mainQueue())
+            .receive(on: DispatchQueue.main)
             .catchToEffect()
             .map(ChartsAction.chartDataLoaded)
 
@@ -39,7 +39,7 @@ let chartsReducer = Reducer<
         }
         
         return environment.searchArtistRequest(searchQuery, state.currentPage)
-            .receive(on: environment.mainQueue())
+            .receive(on: DispatchQueue.main)
             .catchToEffect()
             .map(ChartsAction.searchResultDataLoaded)
 

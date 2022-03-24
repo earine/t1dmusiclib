@@ -1,5 +1,5 @@
 //
-//  albumState.swift
+//  AlbumState.swift
 //  Musiclib
 //
 //  Created by mlunts on 22.03.2022.

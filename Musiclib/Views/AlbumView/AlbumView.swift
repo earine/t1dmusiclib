@@ -7,13 +7,14 @@
 
 import SwiftUI
 import ComposableArchitecture
-import UIKit
+
 struct AlbumView: View {
     let store: Store<AlbumState, AlbumAction>
 
     private enum Constants {
         static let trackNumberWidth: CGFloat = 22
         static let trackTitlePadding: CGFloat = 4
+        static let trackCoverPlaceholderImageName: String = "camera.metering.unknown"
     }
 
     var body: some View {
@@ -28,13 +29,13 @@ struct AlbumView: View {
                                 .coverImageModifier(height: UIScreen.main.bounds.width,
                                                     width: UIScreen.main.bounds.width)
                         } placeholder: {
-                            Image(systemName: "camera.metering.unknown")
+                            Image(systemName: Constants.trackCoverPlaceholderImageName)
                         }
                         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
                         .listRowInsets(EdgeInsets())
 
                         if let tracks = viewStore.tracks {
-                            ForEach(tracks.indices) { index in
+                            ForEach(tracks.indices, id: \.self) { index in
                                 trackListCell(tracks[index], trackNumber: String(index + 1))
                             }
                         }
@@ -96,11 +97,10 @@ struct AlbumView_Previews: PreviewProvider {
                                                          )
                                                   ]))),
             reducer: albumReducer,
-            environment: .live(
-                environment: AlbumEnvironment(
-                    albumRequest: NetworkClient.shared.albumEffect,
-                    trackRequest: NetworkClient.shared.trackInfoEffect
-                )
-            )))
+            environment: AlbumEnvironment(
+                albumRequest: NetworkClient.shared.albumEffect,
+                trackRequest: NetworkClient.shared.trackInfoEffect
+            )
+        ))
     }
 }

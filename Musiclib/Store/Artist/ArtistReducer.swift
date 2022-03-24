@@ -10,15 +10,16 @@ import ComposableArchitecture
 let artistReducer = Reducer<
     ArtistState,
     ArtistAction,
-    SystemEnvironment<ArtistEnvironment>
+    ArtistEnvironment
 > { state, action, environment in
     switch action {
     case .onAppear:
         state.isLoading = true
         return environment.artistAlbumsRequest(state.artist.id)
-            .receive(on: environment.mainQueue())
+            .receive(on: DispatchQueue.main)
             .catchToEffect()
             .map(ArtistAction.albumsDataLoaded)
+
     case .albumsDataLoaded(let result):
         state.isLoading = false
         switch result {

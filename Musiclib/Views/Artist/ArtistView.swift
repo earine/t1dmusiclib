@@ -39,11 +39,9 @@ struct ArtistView: View {
                                 NavigationLink(destination: AlbumView(store: Store(
                                     initialState: AlbumState(album: album),
                                     reducer: albumReducer,
-                                    environment: .live(
-                                        environment: AlbumEnvironment(
-                                            albumRequest: NetworkClient.shared.albumEffect,
-                                            trackRequest: NetworkClient.shared.trackInfoEffect
-                                        )
+                                    environment: AlbumEnvironment(
+                                        albumRequest: NetworkClient.shared.albumEffect,
+                                        trackRequest: NetworkClient.shared.trackInfoEffect
                                     )
                                 ))) {
                                     albumCell(artistName: viewStore.state.artist.name,
@@ -103,15 +101,21 @@ extension ArtistView {
 
 struct ArtistView_Previews: PreviewProvider {
     static var previews: some View {
-        ArtistView(store: Store(initialState: ArtistState(artist: Artist(id: 0,
-                                                                         name: "Sade",
-                                                                         pictureMedium: "",
-                                                                         albums: [
-                                                                            Album(id: 1, title: "Lovers Rock", coverMedium: "") ])),
+        ArtistView(store: Store(initialState: ArtistState(artist:
+                                                            Artist(
+                                                                id: 0,
+                                                                name: "Sade",
+                                                                pictureMedium: "",
+                                                                albums: [
+                                                                    Album(id: 1,
+                                                                          title: "Lovers Rock",
+                                                                          coverMedium: "")
+                                                                ]
+                                                            )
+                                                         ),
                                 reducer: artistReducer,
-                                environment: .live(
-                                    environment: ArtistEnvironment(
-                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect)
-                                )))
+                                environment: ArtistEnvironment(
+                                    artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect)
+        ))
     }
 }

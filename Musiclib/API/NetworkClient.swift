@@ -19,9 +19,9 @@ public class NetworkClient {
     private let baseURL = "https://api.deezer.com"
 
     enum APIEndPoint: String {
-        case artistAlbum = "/artist/*/albums"
         case album = "/album/*"
-        case chart = "/chart/0/artists"
+        case artistAlbum = "/artist/*/albums"
+        case chartArtists = "/chart/0/artists"
         case searchArtist = "/search/artist"
         case track = "/track/*"
     }
@@ -34,7 +34,7 @@ public class NetworkClient {
 
     // MARK: - Chart Requests
     func chartArtistsEffect() -> Effect<Chart, APIError> {
-        guard let url = URL(string: urlStringBuilder(.chart)) else {
+        guard let url = URL(string: urlStringBuilder(.chartArtists)) else {
             fatalError("Error on creating url")
         }
 
@@ -118,23 +118,5 @@ public class NetworkClient {
 
     private func urlStringBuilder(_ endpoint: APIEndPoint) -> String {
         return "\(baseURL)\(endpoint.rawValue)"
-    }
-}
-
-@dynamicMemberLookup
-struct SystemEnvironment<Environment> {
-    var environment: Environment
-
-    subscript<Dependency>(
-        dynamicMember keyPath: WritableKeyPath<Environment, Dependency>
-    ) -> Dependency {
-        get { self.environment[keyPath: keyPath] }
-        set { self.environment[keyPath: keyPath] = newValue }
-    }
-
-    var mainQueue: () -> AnySchedulerOf<DispatchQueue>
-
-    static func live(environment: Environment) -> Self {
-        Self(environment: environment, mainQueue: { .main })
     }
 }
