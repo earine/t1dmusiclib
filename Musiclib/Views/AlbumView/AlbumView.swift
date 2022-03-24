@@ -12,7 +12,7 @@ struct AlbumView: View {
     let store: Store<AlbumState, AlbumAction>
 
     private enum Constants {
-        static let trackNumberWidth: CGFloat = 22
+        static let trackNumberWidth: CGFloat = 25
         static let trackTitlePadding: CGFloat = 4
         static let trackCoverPlaceholderImageName: String = "camera.metering.unknown"
     }
@@ -54,15 +54,16 @@ struct AlbumView: View {
     private func trackListCell(_ track: Track, trackNumber: String) -> some View {
         HStack(alignment: .center) {
             Text(trackNumber)
+                .titleModifier()
                 .frame(width: Constants.trackNumberWidth, alignment: .leading)
 
             VStack(alignment: .leading) {
                 Text(track.title)
+                    .titleModifier()
 
                 if let contributors = track.contributors {
                     Text(contributors.map({ $0.name }).joined(separator: ", "))
-                        .foregroundColor(.secondary)
-                        .font(.callout)
+                        .artistTextModifier()
                 }
             }
             .padding([.top, .bottom], Constants.trackTitlePadding)
@@ -70,8 +71,7 @@ struct AlbumView: View {
             Spacer()
             
             Text(track.duration.durationString)
-                .foregroundColor(.secondary)
-                .font(.callout)
+                .artistTextModifier()
         }
         .lineLimit(1)
         .listRowBackground(Color(UIColor.secondarySystemBackground))

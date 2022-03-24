@@ -32,37 +32,24 @@ public class NetworkClient {
         return decoder
     }
 
-    // MARK: - Chart Requests
+    // MARK: Chart Requests
     func chartArtistsEffect() -> Effect<Chart, APIError> {
         guard let url = URL(string: urlStringBuilder(.chartArtists)) else {
             fatalError("Error on creating url")
         }
 
-        let result = URLSession.shared.dataTaskPublisher(for: url)
-            .mapError { _ in APIError.downloadError }
-            .map { data, _ in
-                return data
-            }
-            .decode(type: Chart.self, decoder: decoder)
-            .mapError { _ in APIError.decodingError }
-            .eraseToEffect()
-        return result
+        return performTask(with: url, type: Chart.self)
     }
 
-    // MARK: - Artist Requests
+    // MARK: Artist Requests
     func artistAlbumsEffect(id: Int) -> Effect<[Album], APIError> {
         guard let url = URL(string: urlStringBuilder(.artistAlbum)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .mapError { _ in APIError.downloadError }
-            .map { data, _ in data }
-            .decode(type: AlbumResponse.self, decoder: decoder)
-            .map({ $0.data })
-            .mapError { _ in APIError.decodingError }
-            .eraseToEffect()
+        return performTask(with: url, type: AlbumResponse.self)
+                .map({ $0.data })
     }
 
     func searchArtistEffect(searchQuery: String, currentIndex: Int) -> Effect<[Artist], APIError> {
@@ -74,44 +61,38 @@ public class NetworkClient {
         guard let url = urlComps?.url else {
             fatalError("Error on creating url")
         }
-
-        let result = URLSession.shared.dataTaskPublisher(for: url)
-            .mapError { _ in APIError.downloadError }
-            .map { data, _ in data }
-            .decode(type: ArtistsResponse.self, decoder: decoder)
-            .map({ $0.data })
-            .mapError { _ in APIError.decodingError }
-            .eraseToEffect()
-
-        return result
+        
+        return performTask(with: url, type: ArtistsResponse.self)
+                .map({ $0.data })
     }
 
-    // MARK: - Album Requests
+    // MARK: Album Requests
     func albumEffect(id: Int) -> Effect<Album, APIError> {
         guard let url = URL(string: urlStringBuilder(.album)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .mapError { _ in APIError.downloadError }
-            .map { data, _ in data }
-            .decode(type: Album.self, decoder: decoder)
-            .mapError { _ in APIError.decodingError }
-            .eraseToEffect()
+        return performTask(with: url, type: Album.self)
     }
 
-    // MARK: - Track Requests
+    // MARK: Track Requests
     func trackInfoEffect(id: Int) -> Effect<Track, APIError> {
         guard let url = URL(string: urlStringBuilder(.track)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
+        return performTask(with: url, type: Track.self)
+    }
+
+    // MARK: - private
+
+    private func performTask<T:Decodable>(with url: URL, type: T.Type) -> Effect<T, APIError> {
         return URLSession.shared.dataTaskPublisher(for: url)
             .mapError { _ in APIError.downloadError }
             .map { data, _ in data }
-            .decode(type: Track.self, decoder: decoder)
+            .decode(type: type.self, decoder: decoder)
             .mapError { _ in APIError.decodingError }
             .eraseToEffect()
     }
