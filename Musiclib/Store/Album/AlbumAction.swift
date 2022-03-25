@@ -8,5 +8,7 @@
 enum AlbumAction {
     case onAppear
     case albumDataLoaded(Result<Album, APIError>)
+    case fetchAlbumData
     case trackDataLoaded(Result<Track, APIError>)
+    case updateTrack(Track)
 }

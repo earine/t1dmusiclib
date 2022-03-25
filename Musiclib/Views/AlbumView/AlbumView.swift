@@ -97,10 +97,7 @@ struct AlbumView_Previews: PreviewProvider {
                                                          )
                                                   ]))),
             reducer: albumReducer,
-            environment: AlbumEnvironment(
-                albumRequest: NetworkClient.shared.albumEffect,
-                trackRequest: NetworkClient.shared.trackInfoEffect
-            )
+            environment: AlbumEnvironment.makeAlbumEnvironment()
         ))
     }
 }

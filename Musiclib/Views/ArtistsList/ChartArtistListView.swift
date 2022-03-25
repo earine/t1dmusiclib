@@ -31,9 +31,7 @@ struct ChartArtistListView: View {
                                 NavigationLink(destination: ArtistView(store: Store(
                                     initialState: ArtistState(artist: artist),
                                     reducer: artistReducer,
-                                    environment: ArtistEnvironment(
-                                        artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect
-                                    )
+                                    environment: ArtistEnvironment.makeArtistEnvironment()
                                 ))) {
                                     artistCell(artist)
                                 }
@@ -97,11 +95,7 @@ struct ArtistsListView_Previews: PreviewProvider {
                                       ],
                                       searchedArtistsResult: nil),
             reducer: chartsReducer,
-            environment: ChartsEnvironment(
-                chartsRequest: NetworkClient.shared.chartArtistsEffect,
-                searchArtistRequest: NetworkClient.shared.searchArtistEffect
-            )
-
+            environment: ChartsEnvironment.makeChartsEnvironment()
         ))
     }
 }

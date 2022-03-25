@@ -15,10 +15,7 @@ struct MusiclibApp: App {
             ChartArtistListView(store: Store(
                 initialState: ChartsState(),
                 reducer: chartsReducer,
-                environment: ChartsEnvironment(
-                        chartsRequest: NetworkClient.shared.chartArtistsEffect,
-                        searchArtistRequest: NetworkClient.shared.searchArtistEffect
-                )
+                environment: ChartsEnvironment.makeChartsEnvironment()
             ))
         }
     }

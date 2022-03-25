@@ -39,10 +39,7 @@ struct ArtistView: View {
                                 NavigationLink(destination: AlbumView(store: Store(
                                     initialState: AlbumState(album: album),
                                     reducer: albumReducer,
-                                    environment: AlbumEnvironment(
-                                        albumRequest: NetworkClient.shared.albumEffect,
-                                        trackRequest: NetworkClient.shared.trackInfoEffect
-                                    )
+                                    environment: AlbumEnvironment.makeAlbumEnvironment()
                                 ))) {
                                     albumCell(artistName: viewStore.state.artist.name,
                                               album)
@@ -113,8 +110,7 @@ struct ArtistView_Previews: PreviewProvider {
                                                             )
                                                          ),
                                 reducer: artistReducer,
-                                environment: ArtistEnvironment(
-                                    artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect)
-        ))
+                                environment: ArtistEnvironment.makeArtistEnvironment())
+        )
     }
 }
