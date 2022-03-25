@@ -7,6 +7,7 @@
 
 import XCTest
 import ComposableArchitecture
+import SnapshotTesting
 @testable import Musiclib
 
 class musiclibTests: XCTestCase {
@@ -38,6 +39,13 @@ class musiclibTests: XCTestCase {
                                              )
                                     ]))
 
+    private let mockedTrack = Track(id: 1528428352,
+                                    title: "Text Book",
+                                    duration: 303,
+                                    contributors: [Artist(id: 1424821,
+                                                          name: "Lana Del Rey",
+                                                          pictureMedium: "https://e-cdns-images.dzcdn.net/images/artist/df76fa73a458af753cbe9e5ae64a33cd/250x250-000000-80-0-0.jpg")
+                                    ])
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -47,33 +55,83 @@ class musiclibTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
+    // MARK: - Request tests
+    func testArtistAlbumsRequestFailure() throws {
+        let expectation = expectation(description: "testArtistAlbumsRequestFailure")
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        NetworkClient.shared.artistAlbums(id: 0) { result in
+            switch result {
+            case .success(let albums):
+                print(albums.data)
+                break
+            case .failure(let error):
+                XCTAssertNotNil(error)
+                break
+            }
+
+            expectation.fulfill()
         }
+
+        waitForExpectations(timeout: 1, handler: nil)
     }
 
-    func testAlbumRequest() throws {
-        let mockedAlbum = Album(id: 110497512,
-                                title: "Charli",
-                                coverMedium: "https://e-cdns-images.dzcdn.net/images/cover/9c7ad8c4c90f91fc1762a09b9bce257f/250x250-000000-80-0-0.jpg",
-                                tracks: TracksResponse(data: [
-                                ]))
+    func testArtistAlbumsRequestSuccess() throws {
+        let expectation = expectation(description: "testArtistAlbumsRequestSuccess")
 
-        let ree = NetworkClient.shared.albumEffect(id: mockedAlbum.id)
-            
+        NetworkClient.shared.artistAlbums(id: mockedArtist.id) { result in
+            switch result {
+            case .success(let albums):
+                XCTAssertNotNil(albums.data)
+                break
+            case .failure(let error):
+                XCTAssertNil(error)
+                break
+            }
 
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
     }
 
+    func testTrackInfoRequestFailure() throws {
+        let expectation = expectation(description: "testTrackInfoRequestFailure")
+
+        NetworkClient.shared.trackInfo(id: 0) { result in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                XCTAssertNotNil(error)
+                break
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testTrackInfoRequestSuccess() throws {
+        let expectation = expectation(description: "testTrackInfoRequestSuccess")
+
+        NetworkClient.shared.trackInfo(id: mockedTrack.id) { result in
+            switch result {
+            case .success(let track):
+                XCTAssertEqual(self.mockedTrack, track)
+                break
+            case .failure(let error):
+                XCTAssertTrue(error == .decodingError)
+                break
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    // MARK: - Store tests
     func testArtistSearchResultFailure() throws {
         let store = TestStore(initialState: ChartsState(isSearching: true,
                                                         searchQuery: "",
@@ -81,11 +139,8 @@ class musiclibTests: XCTestCase {
                                                         searchedArtistsResult: [],
                                                         currentPage: 0),
                               reducer: chartsReducer,
-                              environment: ChartsEnvironment(
-                                chartsRequest: NetworkClient.shared.chartArtistsEffect,
-                                searchArtistRequest: NetworkClient.shared.searchArtistEffect
-                                )
-                            )
+                              environment: ChartsEnvironment.makeChartsEnvironment()
+        )
         let result = Result<[Artist], APIError>.init(of: nil, or: APIError.decodingError)
         store.send(.searchResultDataLoaded(result)) { state in
             state.isSearching = true
@@ -100,11 +155,8 @@ class musiclibTests: XCTestCase {
                                                         searchedArtistsResult: [],
                                                         currentPage: 0),
                               reducer: chartsReducer,
-                              environment: ChartsEnvironment(
-                                chartsRequest: NetworkClient.shared.chartArtistsEffect,
-                                searchArtistRequest: NetworkClient.shared.searchArtistEffect
-                                )
-                            )
+                              environment: ChartsEnvironment.makeChartsEnvironment()
+        )
         let result = Result<[Artist], APIError>.init(of: [mockedArtist], or: nil)
 
         store.send(.searchResultDataLoaded(result)) { state in
@@ -117,8 +169,7 @@ class musiclibTests: XCTestCase {
     func testArtistAlbumsDataLoadedFailureState() throws {
         let store = TestStore(initialState: ArtistState(artist: mockedArtist),
                               reducer: artistReducer,
-                              environment: ArtistEnvironment(
-                                artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect))
+                              environment: ArtistEnvironment.makeArtistEnvironment())
         let result = Result<[Album], APIError>.init(of: nil, or: APIError.decodingError)
 
         store.send(.albumsDataLoaded(result)) { $0.artist.albums = [] }
@@ -127,8 +178,7 @@ class musiclibTests: XCTestCase {
     func testArtistAlbumsDataLoadedSuccessState() throws {
         let store = TestStore(initialState: ArtistState(artist: mockedArtist),
                               reducer: artistReducer,
-                              environment: ArtistEnvironment(
-                                artistAlbumsRequest: NetworkClient.shared.artistAlbumsEffect))
+                              environment: ArtistEnvironment.makeArtistEnvironment())
 
         let mockedAlbums = [mockedAlbum]
         let result = Result<[Album], APIError>.init(of: mockedAlbums, or: nil)
@@ -138,10 +188,7 @@ class musiclibTests: XCTestCase {
     func testAlbumTracksLoadingState() throws {
         let store = TestStore(initialState: AlbumState(album: mockedAlbum),
                               reducer: albumReducer,
-                              environment: AlbumEnvironment(
-                                albumRequest: NetworkClient.shared.albumEffect,
-                                trackRequest: NetworkClient.shared.trackInfoEffect
-                              )
+                              environment: AlbumEnvironment.makeAlbumEnvironment()
         )
 
         let updatedTrack = Track(id: 2,
@@ -157,6 +204,18 @@ class musiclibTests: XCTestCase {
 
         store.send(.updateTrack(updatedTrack)) { state in
             state.isLoading = false
+        }
+    }
+}
+
+extension Result {
+    init(of success: Success?, or failure: Failure?) {
+        if let failure = failure {
+            self = .failure(failure)
+        } else if let success = success {
+            self = .success(success)
+        } else {
+            fatalError("Neither success \(String(describing: success)) nor failure \(String(describing: failure)) was non nil")
         }
     }
 }

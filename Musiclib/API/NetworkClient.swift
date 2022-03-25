@@ -33,26 +33,28 @@ public class NetworkClient {
     }
 
     // MARK: Chart Requests
-    func chartArtistsEffect() -> Effect<Chart, APIError> {
+    func chartArtists(completion: @escaping (Result<Chart, APIError>) -> Void) {
         guard let url = URL(string: urlStringBuilder(.chartArtists)) else {
             fatalError("Error on creating url")
         }
 
-        return performTask(with: url, type: Chart.self)
+        performTask(for: url, completion: completion)
     }
 
     // MARK: Artist Requests
-    func artistAlbumsEffect(id: Int) -> Effect<[Album], APIError> {
+    func artistAlbums(id: Int,
+                            completion: @escaping (Result<AlbumResponse, APIError>) -> Void) {
         guard let url = URL(string: urlStringBuilder(.artistAlbum)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
-        return performTask(with: url, type: AlbumResponse.self)
-                .map({ $0.data })
+        performTask(for: url, completion: completion)
     }
 
-    func searchArtistEffect(searchQuery: String, currentIndex: Int) -> Effect<[Artist], APIError> {
+    func searchArtist(searchQuery: String,
+                            currentIndex: Int,
+                            completion: @escaping (Result<ArtistsResponse, APIError>) -> Void) {
         let queryItems = [URLQueryItem(name: "q", value: searchQuery),
                           URLQueryItem(name: "index", value: String(currentIndex))]
         var urlComps = URLComponents(string: urlStringBuilder(.searchArtist))
@@ -61,40 +63,49 @@ public class NetworkClient {
         guard let url = urlComps?.url else {
             fatalError("Error on creating url")
         }
-        
-        return performTask(with: url, type: ArtistsResponse.self)
-                .map({ $0.data })
+
+        performTask(for: url, completion: completion)
     }
 
     // MARK: Album Requests
-    func albumEffect(id: Int) -> Effect<Album, APIError> {
+    func album(id: Int, completion: @escaping (Result<Album, APIError>) -> Void) {
         guard let url = URL(string: urlStringBuilder(.album)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
-        return performTask(with: url, type: Album.self)
+        performTask(for: url, completion: completion)
     }
 
     // MARK: Track Requests
-    func trackInfoEffect(id: Int) -> Effect<Track, APIError> {
+    func trackInfo(id: Int, completion: @escaping (Result<Track, APIError>) -> Void) {
         guard let url = URL(string: urlStringBuilder(.track)
             .replacingOccurrences(of: "*", with: String(id))) else {
             fatalError("Error on creating url")
         }
 
-        return performTask(with: url, type: Track.self)
+        performTask(for: url, completion: completion)
     }
 
     // MARK: - private
 
-    private func performTask<T:Decodable>(with url: URL, type: T.Type) -> Effect<T, APIError> {
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .mapError { _ in APIError.downloadError }
-            .map { data, _ in data }
-            .decode(type: type.self, decoder: decoder)
-            .mapError { _ in APIError.decodingError }
-            .eraseToEffect()
+    private func performTask<T: Decodable>(for url : URL,
+                                           completion: @escaping (Result<T, APIError>) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            DispatchQueue.main.async {
+                if let _ = error {
+                    completion(.failure(.downloadError))
+                } else {
+                    do {
+                        let decodedData = try self.decoder.decode(T.self, from: data!)
+                        completion(.success(decodedData))
+                    } catch {
+                        completion(.failure(.decodingError))
+                    }
+                }
+            }
+        }
+        task.resume()
     }
 
     private func urlStringBuilder(_ endpoint: APIEndPoint) -> String {
