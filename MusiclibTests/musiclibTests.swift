@@ -62,7 +62,6 @@ class musiclibTests: XCTestCase {
         NetworkClient.shared.artistAlbums(id: 0) { result in
             switch result {
             case .success(let albums):
-                print(albums.data)
                 break
             case .failure(let error):
                 XCTAssertNotNil(error)
@@ -85,6 +84,63 @@ class musiclibTests: XCTestCase {
                 break
             case .failure(let error):
                 XCTAssertNil(error)
+                break
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testSearchArtistNoResultsRequestSuccess() throws {
+        let expectation = expectation(description: "testSearchArtistNoResultsRequestSuccess")
+
+        NetworkClient.shared.searchArtist(searchQuery: "Lanaa dek reey", currentIndex: 0) { result in
+            switch result {
+            case .success(let artists):
+                XCTAssertTrue(artists.data.isEmpty)
+                break
+            case .failure(let error):
+                XCTAssertNotNil(error)
+                break
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testSearchArtistRequestSuccess() throws {
+        let expectation = expectation(description: "testSearchArtistRequestSuccess")
+
+        NetworkClient.shared.searchArtist(searchQuery: "Lana Del Rey", currentIndex: 0) { result in
+            switch result {
+            case .success(let artists):
+                XCTAssertTrue(artists.data.contains(where: { $0.id == self.mockedArtist.id }))
+                break
+            case .failure(let error):
+                XCTAssertNotNil(error)
+                break
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testChartArtistsRequestSuccess() throws {
+        let expectation = expectation(description: "testChartArtistsRequestSuccess")
+
+        NetworkClient.shared.chartArtists { result in
+            switch result {
+            case .success(let chart):
+                XCTAssertNotNil(chart.artists)
+                break
+            case .failure(let error):
+                XCTAssertNotNil(error)
                 break
             }
 
