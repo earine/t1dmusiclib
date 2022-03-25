@@ -17,6 +17,8 @@ struct ChartArtistListView: View {
         static let cellHeight: CGFloat = 40
         static let artistImageWidth: CGFloat = 60
         static let trackCoverPlaceholderImageName: String = "camera.metering.unknown"
+        static let navigationTitleText: String = "Artists"
+        static let noResultsText: String = "No results"
     }
 
     var body: some View {
@@ -26,7 +28,8 @@ struct ChartArtistListView: View {
                     List {
                         if let artists = viewStore.state.isSearching
                             ? viewStore.state.searchedArtistsResult
-                            : viewStore.state.artists {
+                            : viewStore.state.artists,
+                           artists.isEmpty == false {
                             ForEach(artists, id: \.id) { artist in
                                 NavigationLink(destination: ArtistView(store: Store(
                                     initialState: ArtistState(artist: artist),
@@ -36,21 +39,20 @@ struct ChartArtistListView: View {
                                     artistCell(artist)
                                 }
                             }
+                        } else {
+                            CustomCenterView(view: AnyView(Text(Constants.noResultsText)),
+                                             fullScreen: true)
                         }
 
                         if viewStore.state.isSearching
                             && viewStore.state.searchedArtisResultIsFull == false {
-                            HStack {
-                                Spacer()
-                                ProgressView()
-                                    .onAppear {
-                                        viewStore.send(.searchArtistByText(searchQueryString))
-                                    }
-                                Spacer()
-                            }
+                            CustomCenterView(view: AnyView(ProgressView()))
+                                .onAppear {
+                                    viewStore.send(.searchArtistByText(searchQueryString))
+                                }
                         }
                     }
-                    .navigationTitle("Artists")
+                    .navigationTitle(Constants.navigationTitleText)
                     .listStyle(.plain)
                     .onAppear() {
                         viewStore.send(.onAppear)
@@ -81,6 +83,15 @@ extension ChartArtistListView {
             Text(artist.name)
         }
         .frame(height: Constants.cellHeight)
+    }
+
+    private func bigCellWithView(view: AnyView) -> some View {
+        HStack {
+            Spacer()
+            view
+            Spacer()
+        }
+        .frame(height: Constants.cellHeight * 2)
     }
 }
 

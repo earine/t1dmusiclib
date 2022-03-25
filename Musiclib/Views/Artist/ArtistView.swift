@@ -20,6 +20,7 @@ struct ArtistView: View {
         static let albumCoverMultiplier: CGFloat = 0.45
         static let lineLimit: Int = 2
         static let spacing: CGFloat = 5
+        static let noAlbumsText: String = "No albums"
     }
 
     private var albumCoverFrame: CGFloat {
@@ -32,21 +33,26 @@ struct ArtistView: View {
                 if viewStore.state.isLoading {
                     ProgressView()
                 } else {
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
-                            ForEach(viewStore.state.artist.albums ?? [], id: \.id) { album in
+                    if let albums = viewStore.state.artist.albums, albums.isEmpty == false {
+                        ScrollView {
+                            LazyVGrid(columns: columns) {
+                                ForEach(viewStore.state.artist.albums ?? [], id: \.id) { album in
 
-                                NavigationLink(destination: AlbumView(store: Store(
-                                    initialState: AlbumState(album: album),
-                                    reducer: albumReducer,
-                                    environment: AlbumEnvironment.makeAlbumEnvironment()
-                                ))) {
-                                    albumCell(artistName: viewStore.state.artist.name,
-                                              album)
+                                    NavigationLink(destination: AlbumView(store: Store(
+                                        initialState: AlbumState(album: album),
+                                        reducer: albumReducer,
+                                        environment: AlbumEnvironment.makeAlbumEnvironment()
+                                    ))) {
+                                        albumCell(artistName: viewStore.state.artist.name,
+                                                  album)
 
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        CustomCenterView(view: AnyView(Text(Constants.noAlbumsText)),
+                                         fullScreen: true)
                     }
                 }
             }

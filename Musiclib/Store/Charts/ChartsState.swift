@@ -15,7 +15,7 @@ struct ChartsState: Equatable {
     var searchedArtistsResult: [Artist]?
 
     var searchedArtisResultIsFull: Bool {
-        return currentPage == maximumPage
+        return currentPage == maximumPage || searchedArtistsResult?.isEmpty ?? false
     }
 
     // MARK: Pagination support

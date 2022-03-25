@@ -78,7 +78,7 @@
 		AEAC360F27EA11EF0066F2F9 /* Int+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAC360E27EA11EF0066F2F9 /* Int+Helpers.swift */; };
 		AEC010A127EDCEDC00EDAF21 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AEC010A027EDCEDC00EDAF21 /* SnapshotTesting */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AEC010A227EDCF0000EDAF21 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEC0109E27EDCB3500EDAF21 /* XCTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		AEC010A427EDCF5300EDAF21 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AEC010A327EDCF5300EDAF21 /* SnapshotTesting */; };
+		AEC010A627EDDC0400EDAF21 /* CustomCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC010A527EDDC0400EDAF21 /* CustomCenterView.swift */; };
 		AEFE167527E8E20F0000F2E3 /* ArtistAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */; };
 		AEFE167727E8E2200000F2E3 /* ArtistReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */; };
 		AEFE167927E8E22E0000F2E3 /* ArtistEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */; };
@@ -132,6 +132,7 @@
 		AEAC360C27EA0D5C0066F2F9 /* AlbumState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumState.swift; sourceTree = "<group>"; };
 		AEAC360E27EA11EF0066F2F9 /* Int+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Helpers.swift"; sourceTree = "<group>"; };
 		AEC0109E27EDCB3500EDAF21 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AEC010A527EDDC0400EDAF21 /* CustomCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCenterView.swift; sourceTree = "<group>"; };
 		AEFE167427E8E20F0000F2E3 /* ArtistAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAction.swift; sourceTree = "<group>"; };
 		AEFE167627E8E2200000F2E3 /* ArtistReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistReducer.swift; sourceTree = "<group>"; };
 		AEFE167827E8E22E0000F2E3 /* ArtistEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistEnvironment.swift; sourceTree = "<group>"; };
@@ -149,7 +150,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE0C1B1B27E8990800A55478 /* ComposableArchitecture in Frameworks */,
-				AEC010A427EDCF5300EDAF21 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				AE0F3AD327E5E666005E8DAC /* MusiclibApp.swift */,
+				AEC010A527EDDC0400EDAF21 /* CustomCenterView.swift */,
 				AEAC360227E9FE020066F2F9 /* AlbumView */,
 				AE0F3B2E27E5EF41005E8DAC /* Artist */,
 				AE0F3B2527E5EAFF005E8DAC /* ArtistsList */,
@@ -365,7 +366,6 @@
 			name = Musiclib;
 			packageProductDependencies = (
 				AE0C1B1A27E8990800A55478 /* ComposableArchitecture */,
-				AEC010A327EDCF5300EDAF21 /* SnapshotTesting */,
 			);
 			productName = musiclib;
 			productReference = AE0F3AD027E5E666005E8DAC /* Musiclib.app */;
@@ -488,6 +488,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEC010A627EDDC0400EDAF21 /* CustomCenterView.swift in Sources */,
 				AE0F3B2727E5EB30005E8DAC /* ChartArtistListView.swift in Sources */,
 				AEAC360B27EA00770066F2F9 /* AlbumEnvironment.swift in Sources */,
 				AEFE167527E8E20F0000F2E3 /* ArtistAction.swift in Sources */,
@@ -919,11 +920,6 @@
 			productName = ComposableArchitecture;
 		};
 		AEC010A027EDCEDC00EDAF21 /* SnapshotTesting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AE391C2E27ECFA1E00AC2496 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
-			productName = SnapshotTesting;
-		};
-		AEC010A327EDCF5300EDAF21 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AE391C2E27ECFA1E00AC2496 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
